@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 let books = require("./booksdb.js");
 let isUserDefined = require("./auth_users.js").isUserDefined;
 let users = require("./auth_users.js").users;
@@ -25,8 +26,9 @@ public_users.post("/register", (req,res) => {
 
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
-  //Write your code here
+  //original code
   return res.status(300).send(JSON.stringify(books,null,4)); //UPDATED TO STRINGIFY
+
   //return res.status(300).json({message: "Yet to be implemented"});
 });
 
@@ -68,5 +70,47 @@ public_users.get('/review/:isbn',function (req, res) {
   return res.status(300).json(book.reviews);
   //return res.status(300).json({message: "Yet to be implemented"});
 });
+
+//async await with axios
+function getBooklist(){
+  axios.get('http://localhost:5000/')
+    .then(response => {
+      console.log(response.data);
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+}
+
+function getBookDetails(){
+  axios.get('http://localhost:5000/isbn/2')
+    .then(response => {
+      console.log(response.data);
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+}
+
+function getBookbyAuthor(){
+  axios.get('http://localhost:5000/author/unknown')
+    .then(response => {
+      console.log(response.data);
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+}
+
+function getBookByTitle(){
+  axios.get('http://localhost:5000/title/The%20Book%20Of%20Job')
+    .then(response => {
+      console.log(response.data);
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+}
+
 
 module.exports.general = public_users;
