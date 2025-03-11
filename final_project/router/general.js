@@ -10,8 +10,7 @@ public_users.post("/register", (req,res) => {
   //Write your code here
   const username = req.query.username;
   const password = req.query.password;
-  console.log(username);
-  console.log(password);
+  console.log(`registering user: ${username} - password: ${password}`);
 
   if (username && password) {
     if (!isUserDefined(username)) {
